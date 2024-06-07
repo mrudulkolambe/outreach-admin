@@ -7,6 +7,7 @@ import { AuthContextProvider } from './context/AuthContext';
 import { PostContextProvider } from './context/PostContext';
 import { UserContextProvider } from './context/UserContext';
 import SingleUser from './pages/User/SingleUser';
+import SinglePost from './pages/Post/SinglePost';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/users/all' Component={Users} />
                 <Route path='/users/:_id' Component={SingleUser} />
                 <Route path='/posts/all' Component={Posts} />
+                <Route path='/posts/:_id' Component={SinglePost} />
               </Routes>
             </PostContextProvider>
           </UserContextProvider>

@@ -5,6 +5,7 @@ const endpoints = {
 	getUsers: `${baseURL}/user/get`,
 	getPosts: `${baseURL}/feed/get`,
 	blockUser: `${baseURL}/user/block`,
+	blockPost: `${baseURL}/feed/block`,
 }
 
 export default endpoints

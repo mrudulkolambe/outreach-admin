@@ -27,7 +27,7 @@ const Posts = () => {
 					<div className='mt-5 w-full main flex-1 rounded-3xl overflow-hidden'>
 						<div className='main w-full bg-white rounded-3xl shadow-xl overflow-scroll border-2'>
 							<table className="w-full text-sm text-left rtl:text-right">
-								<tr className='bg-white border-b-2 sticky top-0 shadow shadow-black/5'>
+								<tr className='z-10 bg-white border-b-2 sticky top-0 shadow shadow-black/5'>
 									<th className="px-6 py-4">#</th>
 									<th className="px-6 py-4">User</th>
 									<th className="px-6 py-4">Category</th>

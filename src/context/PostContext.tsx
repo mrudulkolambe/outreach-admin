@@ -8,12 +8,14 @@ interface PostContextType {
 	posts: PostType[];
 	setPosts: React.Dispatch<React.SetStateAction<PostType[]>>;
 	fetchPosts: () => Promise<void>;
+	getSinglePost: (_id: string) => PostType | null;
 }
 
 const defaultPostContext: PostContextType = {
 	posts: [],
 	setPosts: () => { },
-	fetchPosts: async () => { }
+	fetchPosts: async () => { },
+	getSinglePost: (_id: string) => null
 };
 
 const PostContext = createContext(defaultPostContext);
@@ -35,8 +37,21 @@ const PostContextProvider = ({ children }: { children: React.ReactNode }) => {
 	}, [token]);
 
 
+	const getSinglePost = (_id: string): PostType | null => {
+		let post = posts.filter((post) => {
+			return post._id == _id
+		})
+
+		if (post.length != 0) {
+			return post[0]
+		} else {
+			return null
+		}
+	}
+
+
 	return (
-		<PostContext.Provider value={{ posts, setPosts, fetchPosts }}>
+		<PostContext.Provider value={{ posts, setPosts, fetchPosts, getSinglePost}}>
 			{children}
 		</PostContext.Provider>
 	);
