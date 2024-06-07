@@ -1,5 +1,3 @@
-import React, { useState } from 'react'
-
 const PostRow = ({ post }: { post: PostType }) => {
 	return (
 		<tr className=" border-b even:bg-accent/5 odd:bg-white">
