@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import { useUserContext } from '../../context/UserContext';
 import { useNavigate, useParams  } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
