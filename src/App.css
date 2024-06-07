@@ -16,3 +16,8 @@ body{
 .main-table th, .main-table td{
 	padding: 1rem 0;
 }
+
+.sidebar-height{
+	max-height: calc(100vh - 80px);
+	height: calc(100vh - 80px);
+}

@@ -1,11 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import { useUserContext } from '../../context/UserContext';
 import { Link } from 'react-router-dom';
 
 const Users = () => {
-	const [search, setSearch] = useState("");
 	const { users } = useUserContext()
+	const [searchResults, setSearchResults] = useState<UserType[]>([]);
+
+	const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+		if (e.currentTarget.value.length < 3) {
+			setSearchResults(users);
+		} else {
+			let search = e.currentTarget.value.toLowerCase();
+			let filteredUsers = users.filter((user) => {
+				return user._id.toLowerCase().includes(search) || user.name?.toLowerCase().includes(search) || user.username?.toLowerCase().includes(search) || user.email.toLowerCase().includes(search)
+			})
+			setSearchResults(filteredUsers);
+		}
+	}
+
+	useEffect(() => {
+		setSearchResults(users);
+	}, [users]);
+
 	return (
 		<>
 			<Layout>
@@ -19,7 +36,7 @@ const Users = () => {
 					</div>
 					<div className='relative w-[22vw] items-center bg-white shadow-md shadow-black/5 rounded-2xl flex justify-end'>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="lightgrey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-						<input value={search} type="text" onChange={(e) => setSearch(e.currentTarget.value)} className='outline-none w-[20vw] bg-white px-3 py-3 rounded-xl' placeholder='Search...' />
+						<input type="text" onChange={handleSearch} className='outline-none w-[20vw] bg-white px-3 py-3 rounded-xl' placeholder='Search...' />
 					</div>
 				</div>
 				<div className='flex p-6 flex-col'>
@@ -35,7 +52,7 @@ const Users = () => {
 									<th className="px-6 py-4">Status</th>
 								</tr>
 								{
-									users.map((user: UserType) => {
+									searchResults.map((user: UserType) => {
 										return <tr className=" border-b even:bg-accent/5 odd:bg-white">
 											<td className="px-6 py-4 font-semibold"><Link to={`/users/${user._id}`}>{`#${user._id.slice(18)}`}</Link></td>
 											<td className="px-6 py-4">{user.name}</td>

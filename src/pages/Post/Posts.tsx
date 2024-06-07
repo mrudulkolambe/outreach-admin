@@ -1,11 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import PostRow from '../../components/posts/PostRow';
 import { usePostContext } from '../../context/PostContext';
 
 const Posts = () => {
-	const [search, setSearch] = useState("");
 	const { posts } = usePostContext()
+	const [searchResults, setSearchResults] = useState<PostType[]>([]);
+	useEffect(() => {
+		setSearchResults(posts);
+	}, [posts]);
+
+	const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+		if(e.currentTarget.value.length < 3){
+			setSearchResults(posts);
+		}else{
+			let search = e.currentTarget.value.toLowerCase();
+			let filteredPosts = posts.filter((post) => {
+				console.log(post)
+				return post._id.toLowerCase().includes(search) || post.userId._id.toLowerCase().includes(search) || post.userId.name?.toLowerCase().includes(search) || post.userId.email?.toLowerCase().includes(search) || post.userId.username?.toLowerCase().includes(search) || post.content?.toLowerCase().includes(search)
+			})
+			setSearchResults(filteredPosts);
+		}
+	}
 	return (
 		<>
 			<Layout>
@@ -19,7 +35,7 @@ const Posts = () => {
 					</div>
 					<div className='relative w-[22vw] items-center bg-white shadow-md shadow-black/5 rounded-2xl flex justify-end'>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="lightgrey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-						<input value={search} onChange={(e) => setSearch(e.currentTarget.value)} type="text" className='outline-none w-[20vw] bg-white px-3 py-3 rounded-xl' placeholder='Search...' />
+						<input onChange={handleSearch} type="text" className='outline-none w-[20vw] bg-white px-3 py-3 rounded-xl' placeholder='Search...' />
 					</div>
 				</div>
 				<div className='flex p-6 flex-col'>
@@ -35,7 +51,7 @@ const Posts = () => {
 									<th className="px-6 py-4">Status</th>
 								</tr>
 								{
-									posts.map((post: PostType) => {
+									searchResults.map((post: PostType) => {
 										return <PostRow post={post} key={post._id} />
 									})
 								}
