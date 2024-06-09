@@ -22,11 +22,13 @@ function App() {
         <AuthContextProvider>
           <UserContextProvider>
             <PostContextProvider>
+              <Routes>
+                <Route path='/' Component={Login} />
+              </Routes>
               <main className='flex w-screen h-screen overflow-hidden'>
-                <Sidebar collapse={collapse} setCollapse={setCollapse} />
+                {<Sidebar collapse={collapse} setCollapse={setCollapse} />}
                 <section className={collapse ? 'duration-200 transition-all w-[94vw] max-h-screen h-screen flex flex-col bg-gray-100' : 'duration-200 transition-all w-[78vw] max-h-screen h-screen flex flex-col bg-gray-100'}>
                   <Routes>
-                    <Route path='/' Component={Login} />
                     <Route path='/users/all' Component={Users} />
                     <Route path='/users/:_id' Component={SingleUser} />
                     <Route path='/posts/all' Component={Posts} />
