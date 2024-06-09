@@ -8,22 +8,32 @@ import { PostContextProvider } from './context/PostContext';
 import { UserContextProvider } from './context/UserContext';
 import SingleUser from './pages/User/SingleUser';
 import SinglePost from './pages/Post/SinglePost';
+import { useEffect, useState } from 'react';
+import Sidebar from './components/Sidebar';
 
 function App() {
-
+  useEffect(() => {
+    setCollapse(localStorage.getItem("sidebar-collapse") == "true")
+  }, []);
+  const [collapse, setCollapse] = useState(false)
   return (
     <>
       <BrowserRouter>
         <AuthContextProvider>
           <UserContextProvider>
             <PostContextProvider>
-              <Routes>
-                <Route path='/' Component={Login} />
-                <Route path='/users/all' Component={Users} />
-                <Route path='/users/:_id' Component={SingleUser} />
-                <Route path='/posts/all' Component={Posts} />
-                <Route path='/posts/:_id' Component={SinglePost} />
-              </Routes>
+              <main className='flex w-screen h-screen overflow-hidden'>
+                <Sidebar collapse={collapse} setCollapse={setCollapse} />
+                <section className={collapse ? 'duration-200 transition-all w-[94vw] max-h-screen h-screen flex flex-col bg-gray-100' : 'duration-200 transition-all w-[78vw] max-h-screen h-screen flex flex-col bg-gray-100'}>
+                  <Routes>
+                    <Route path='/' Component={Login} />
+                    <Route path='/users/all' Component={Users} />
+                    <Route path='/users/:_id' Component={SingleUser} />
+                    <Route path='/posts/all' Component={Posts} />
+                    <Route path='/posts/:_id' Component={SinglePost} />
+                  </Routes>
+                </section>
+              </main>
             </PostContextProvider>
           </UserContextProvider>
         </AuthContextProvider>

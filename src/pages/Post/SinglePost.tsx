@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Layout from '../../components/Layout'
 import { useNavigate, useParams } from 'react-router-dom';
 
 import 'swiper/css';
@@ -26,7 +25,6 @@ const SinglePost = () => {
 		let apiResponse = await patch(`${endpoints.blockPost}/${_id}`, {
 			"blockStatus": post?.block ? false : true
 		})
-
 		if (apiResponse.success && _id) {
 			fetchPosts();
 			navigate(-1);
@@ -36,7 +34,6 @@ const SinglePost = () => {
 	}
 	return (
 		<>
-			<Layout>
 				<div className="h-[80px] w-full border-b flex justify-between items-center px-6">
 					<div className='flex gap-3'>
 						<img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg" className='bg-gray-400 h-10 w-10 rounded-full object-cover' alt="" />
@@ -102,7 +99,6 @@ const SinglePost = () => {
 						</div>
 					</div>
 				</div>
-			</Layout>
 		</>
 	)
 }
