@@ -6,7 +6,7 @@ import { Toaster } from 'sonner'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Toaster position='top-center' richColors invert />
+    <Toaster position='top-center' richColors />
     <App />
   </React.StrictMode>,
 )
